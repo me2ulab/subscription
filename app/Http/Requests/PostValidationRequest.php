@@ -24,7 +24,7 @@ class PostValidationRequest extends FormRequest
     public function rules()
     {
         return [
-            'content' => 'string|required',
+            'content' => 'string|required|unique',
             'website_id' => 'Integer|required'
         ];
     }

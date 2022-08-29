@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Subscription;
 use log;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
@@ -22,10 +23,10 @@ class SendSubscriptionEmailJob implements ShouldQueue
      *
      * @return void
      */
-    protected $user;
-    public function __construct($user)
+    protected $data;
+    public function __construct($data)
     {
-        $this->user = $user;
+        $this->data= $data;
     }
 
     /**
@@ -35,12 +36,16 @@ class SendSubscriptionEmailJob implements ShouldQueue
      */
     public function handle()
     {
-        
-        try {
-            Mail::to($this->user->email)
-                ->send(new \App\Mail\SubscriptionEmail($this->user->first_name, '' )); 
-        } catch (\Exception $exception) {
-            throwException($exception);
+        $subscribers = Subscription::where('website_id', $this->data['website_id'])->get();
+        foreach($subscribers as $subscriber)
+        {
+            try {
+                Mail::to($this->user->email)
+                    ->send(new \App\Mail\SubscriptionEmail($this->$subscriber->user()->first_name, $this->data['message'] )); 
+            } catch (\Exception $exception) {
+                throwException($exception);
+            }
         }
+        
     }
 }
