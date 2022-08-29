@@ -1,6 +1,6 @@
 <?php 
 namespace App\Http\Services;
-use App\Models\subscription;
+use App\Models\Subscription;
 use function PHPUnit\Framework\throwException;
 
 class SubscriptionServices
@@ -17,7 +17,7 @@ class SubscriptionServices
                 );
         }
         try{
-            $result = subscription::create($data);
+            $result = Subscription::create($data);
             return successResponse([
                 'message'=> 'Post Created succefully',
                 'data' => $data

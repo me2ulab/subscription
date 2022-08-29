@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Services;
-use App\Models\post;
+use App\Models\Post;
 
 use function PHPUnit\Framework\throwException;
 
@@ -28,6 +28,5 @@ class PostServices
         {
             throwException($ex);
         }
-        return successResponse();
     }
 }
