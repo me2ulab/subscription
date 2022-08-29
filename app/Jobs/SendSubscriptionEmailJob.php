@@ -40,8 +40,8 @@ class SendSubscriptionEmailJob implements ShouldQueue
         foreach($subscribers as $subscriber)
         {
             try {
-                Mail::to($this->user->email)
-                    ->send(new \App\Mail\SubscriptionEmail($this->$subscriber->user()->first_name, $this->data['message'] )); 
+                Mail::to($subscriber->user()->email)
+                    ->send(new \App\Mail\SubscriptionEmail($subscriber->user()->first_name, $this->data['message'] )); 
             } catch (\Exception $exception) {
                 throwException($exception);
             }
